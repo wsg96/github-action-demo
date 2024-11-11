@@ -1,0 +1,28 @@
+
+{
+  "name": "frontend-unit-test",
+  "version": "1.0.0",
+  "description": "A simple frontend unit test project",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^27.4.3",
+    "jest-html-reporter": "^3.4.3"
+  },
+  "jest": {
+    "reporters": [
+      "default",
+      [
+        "jest-html-reporter",
+        {
+          "outputPath": "reports/test-report.html",
+          "pageTitle": "Unit Test Report"
+        }
+      ]
+    ]
+  },
+  "author": "",
+  "license": "ISC"
+}
