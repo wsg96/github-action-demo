@@ -52,17 +52,10 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'         # 指定 Java 版本
-          distribution: 'temurin'     # 可以选择其他发行版，如 'zulu'
-          cache: 'maven'              # 缓存 Maven 依赖
-
-      # 3. 配置 Maven 缓存
-      - name: Cache Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          distribution: 'zulu'     # 可以选择其他发行版，如 'zulu'
 
       - name: 查看当前目录信息
-        run: ls -lah
+        run: |
+          ls -lah
+          mvn -version
+          java -version
