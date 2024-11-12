@@ -56,6 +56,8 @@ jobs:
 
       - name: 查看当前目录信息
         run: |
+          pwd
+          ls
           ls -lah
           mvn -version
           java -version
