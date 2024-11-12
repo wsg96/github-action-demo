@@ -31,7 +31,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4.0.0
         with:
-          name: html-test-report
+          name: unittest-html-test-report.html
           path: reports/test-report.html
 
       - name: Deploy report to GitHub Pages
