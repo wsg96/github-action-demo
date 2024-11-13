@@ -49,8 +49,8 @@ jobs:
         
       - name: Install Maven
         run: |
-          apt-get update
-          apt-get install -y maven
+          sudo apt-get update
+          sudo apt-get install -y maven
 
       # 2. 设置 JDK 环境
       - name: Set up JDK 11
