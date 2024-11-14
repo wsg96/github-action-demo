@@ -1,0 +1,54 @@
+name: Frontend Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4.0.0
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests and generate E2E Test HTML report
+        run: |
+          npm test
+          mkdir -p reports
+          ls -lah reports
+
+      - name: Upload E2E Test HTML test report
+        if: always()
+        uses: actions/upload-artifact@v4.0.0
+        with:
+          name: unittest-html-test-report
+          path: reports/test-report.html
+
+      - name: Deploy E2E Test report to GitHub Pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.MY_GITHUB_TOKEN }}
+          publish_dir: ./reports
+          publish_branch: gh-pages
+
+      - name: Add summary with links
+        if: success()
+        run: |
+          echo "# E2E Test Report Summary" >> $GITHUB_STEP_SUMMARY
+          echo "### GitHub Pages Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "- [View E2E Test Report on GitHub Pages](https://${{ github.repository_owner }}.github.io/${{ github.repository }}/test-report.html)" >> $GITHUB_STEP_SUMMARY
+          echo "### Artifact Download" >> $GITHUB_STEP_SUMMARY
+          echo "- [Download E2E Test Report Artifact](../artifacts/unittest-html-test-report)" >> $GITHUB_STEP_SUMMARY
