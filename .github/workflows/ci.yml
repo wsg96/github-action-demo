@@ -13,13 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4
         with:
           node-version: '16'
-
 
       - name: Install dependencies
         run: npm install
@@ -27,31 +26,73 @@ jobs:
       - name: Run tests and generate HTML report
         run: |
           npm test
-          ls -lah
-          cat reports/test-report.html
-
-
-
-      - name: Upload HTML test report
-        if: always()
-        uses: actions/upload-artifact@v4.0.0
-        with:
-          name: unittest-html-test-report
-          path: reports/test-report.html
+          mkdir -p reports
+          echo "<html><body><h1>Test Report</h1><p>This is a sample test report</p></body></html>" > reports/test-report.html # 假设这是生成的 HTML 报告
 
       - name: HTML Preview
         id: html_preview
         uses: pavi2410/html-preview-action@v4
         with:
-          html_file: './reports/test-report.html'
+          html_file: 'reports/test-report.html'
           job_summary: true
 
-      - name: Deploy report to GitHub Pages
-        if: success()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          personal_token: ${{ secrets.MY_GITHUB_TOKEN }}
-          publish_dir: ./reports
+
+
+
+# name: Frontend Unit Tests
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   Test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4.2.2
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4.0.0
+#         with:
+#           node-version: '16'
+
+
+#       - name: Install dependencies
+#         run: npm install
+
+#       - name: Run tests and generate HTML report
+#         run: |
+#           npm test
+#           ls -lah
+#           cat reports/test-report.html
+
+
+
+#       - name: Upload HTML test report
+#         if: always()
+#         uses: actions/upload-artifact@v4.0.0
+#         with:
+#           name: unittest-html-test-report
+#           path: reports/test-report.html
+
+#       - name: HTML Preview
+#         id: html_preview
+#         uses: pavi2410/html-preview-action@v4
+#         with:
+#           html_file: './reports/test-report.html'
+#           job_summary: true
+
+#       - name: Deploy report to GitHub Pages
+#         if: success()
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           personal_token: ${{ secrets.MY_GITHUB_TOKEN }}
+#           publish_dir: ./reports
 
 #  Java-Test:
 #    runs-on: ubuntu-latest
