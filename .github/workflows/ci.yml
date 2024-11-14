@@ -25,7 +25,8 @@ jobs:
 
       - name: Run tests and generate HTML report
         run: ｜
-          npm test && ls -lah
+          npm test
+          ls -lah
           cat reports/test-report.html
 
 
