@@ -33,6 +33,13 @@ jobs:
           name: unittest-html-test-report
           path: reports/test-report.html
 
+      - name: HTML Preview
+        id: html_preview
+        uses: pavi2410/html-preview-action@v4
+        with:
+          html_file: 'reports/test-report.html'
+          job_summary: true
+
       - name: Deploy report to GitHub Pages
         if: success()
         uses: peaceiris/actions-gh-pages@v3
