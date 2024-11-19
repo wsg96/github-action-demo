@@ -69,6 +69,8 @@ jobs:
         with:
           script: |
             const artifactUrl = `${{ steps.artifact.outputs.artifact-url }}`;
+            console.log('Issue Number:', context.issue.number);
+            console.log('Issue repo:', context.repo.repo);
             const commentBody = `
             ### E2E Test Report Summary
             - **E2E Test Result**: ${process.env.E2E_RESULT || 'Unknown'}
